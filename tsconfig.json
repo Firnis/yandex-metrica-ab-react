@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+
+    "target": "ES6",
+
+    "rootDir": "./src",
+
+    "outDir": "./dist",
+
+    "allowSyntheticDefaultImports": true,
+
+    "allowJs": false,
+
+    "composite": true
+  }
+}
