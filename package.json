@@ -17,7 +17,7 @@
     "./dist/index.d.ts",
     "./dist/context.d.ts",
     "./dist/useExperiments.d.ts",
-    "./dist/global.d.ts"
+    "./dist/types.d.ts"
   ],
   "main": "dist/index.js",
   "scripts": {
