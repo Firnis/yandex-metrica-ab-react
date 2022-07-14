@@ -1,7 +1,7 @@
 interface ExpjsAnswer {
-    flags: Record<string, string[]>;
-    i: string;
-    experiments: string;
+    flags: Record<string, string[] | undefined>;
+    i?: string;
+    experiments?: string;
 }
 
 export interface Answer extends ExpjsAnswer {
