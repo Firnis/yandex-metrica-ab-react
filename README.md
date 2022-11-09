@@ -4,6 +4,8 @@ React библиотека для работы с AB экспериментам�
 
 ### Hook
 ```
+import { useExperiments } from 'yandex-metrica-ab-react';
+
 const ButtonRenderAfterFlags: React.FC = (props) => {
     const { flags, ready } = useExperiments({
         clientId,
