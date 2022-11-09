@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useExperimentsContext, MetricaExperimentsProvider, MetricaExperimentsContext } from '../context';
-import { clientId } from '../clientId';
+import { clientId } from './clientId';
 
 const Button: React.FC = props => {
     const { flags } = useExperimentsContext();

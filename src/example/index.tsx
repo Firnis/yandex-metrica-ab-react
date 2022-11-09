@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { useExperiments } from '../useExperiments';
 import { ProviderApp } from './provider';
-import { clientId } from '../clientId';
+import { clientId } from './clientId';
 
 const Button: React.FC = (props) => {
     const { flags } = useExperiments({
