@@ -6,8 +6,9 @@ interface ExpjsAnswer {
 
 type InitFn = "init";
 
-type Init = (clientId: number | string, func: InitFn, iParam?: string, callback: (data: ExpjsAnswer) => void) => void;
-
 interface Window {
-    ymab: Init;
+    ymab: {
+        (clientId: number | string, func: InitFn, iParam?: string, callback: (data: ExpjsAnswer) => void),
+        a?: IArguments[];
+    }
 }
