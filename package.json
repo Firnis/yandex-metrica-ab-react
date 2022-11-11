@@ -14,10 +14,12 @@
     "./dist/index.js",
     "./dist/context.js",
     "./dist/useExperiments.js",
+    "./dist/createSnippet.js",
     "./dist/index.d.ts",
     "./dist/context.d.ts",
     "./dist/useExperiments.d.ts",
     "./dist/types.d.ts",
+    "./dist/createSnippet.d.ts",
     "./README.md"
   ],
   "main": "dist/index.js",
