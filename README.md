@@ -103,3 +103,12 @@ export const App: React.FC = () => (
         ...
     </MetricaExperimentsContext>
 ```
+
+### Клиентские фичи
+Словарь Key-Value с данными о посетителе.
+Необходим для таргетирования экспериментов.
+
+Пример
+```
+    <MetricaExperimentsProvider clientId={clientId} clientFeatures={{ lang: 'ru', sex: 'male' }}>
+```
