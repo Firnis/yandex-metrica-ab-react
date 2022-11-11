@@ -8,7 +8,7 @@ type InitFn = "init";
 
 interface Window {
     ymab: {
-        (clientId: number | string, func: InitFn, iParam?: string, callback: (data: ExpjsAnswer) => void),
+        (clientId: number | string, func: InitFn, iParam?: string, features?: Record<string, string>, callback: (data: ExpjsAnswer) => void): void;
         a?: IArguments[];
     }
 }
