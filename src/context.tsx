@@ -1,34 +1,24 @@
-import React, { useState, useEffect, ReactNode, useContext } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { Answer, NoAnswer } from './types';
+import { useExperiments, UseExperiments } from './useExperiments';
 
 export const MetricaExperimentsContext = React.createContext<Answer | NoAnswer>({
     flags: {},
     ready: false,
 });
 
-interface UseExperiments {
-    clientId: number | string;
-    param?: string;
+interface ContextExperiments extends UseExperiments {
     children: ReactNode;
 }
 
-export const MetricaExperimentsProvider: React.FC<UseExperiments> = (props) => {
-    const { clientId, param } = props;
+export const MetricaExperimentsProvider: React.FC<ContextExperiments> = (props) => {
+    const { children, ...params } = props;
 
-    const [data, setData] = useState<Answer | NoAnswer>({ ready: false, flags: {} });
-
-    useEffect(() => {
-        window.ymab(clientId, "init", param, (data) => {
-            setData({
-                ...data,
-                ready: true,
-            });
-        });
-    }, [clientId, param]);
+    const data = useExperiments(params);
 
     return (
         <MetricaExperimentsContext.Provider value={{ ...data }}>
-            { props.children }
+            { children }
         </MetricaExperimentsContext.Provider>
     );
 }
