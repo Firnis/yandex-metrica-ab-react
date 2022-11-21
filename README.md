@@ -2,6 +2,10 @@
 
 React библиотека для работы с AB экспериментами Метрики
 
+### Как подключиться
+https://varioqub.ru/
+
+## Инструкция:
 ### Hook
 ```
 import { useExperiments } from 'yandex-metrica-ab-react';
