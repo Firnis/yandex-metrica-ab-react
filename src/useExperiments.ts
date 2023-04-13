@@ -1,25 +1,32 @@
 import { useState, useEffect } from 'react';
-import { Answer, NoAnswer } from './types';
+import { Config, Answer, NoAnswer, ExpjsAnswer } from './types';
+import { createSnippet } from './createSnippet';
 
 export interface UseExperiments {
-    clientId: number | string;
+    clientId: string;
     param?: string;
+    config?: Partial<Config>;
     clientFeatures?: Record<string, string>;
 }
 
 export const useExperiments = (params: UseExperiments) => {
-    const { clientId, param, clientFeatures } = params;
-
+    const { clientId, clientFeatures, config, param: i  } = params;
     const [data, setData] = useState<Answer | NoAnswer>({ ready: false, flags: {} });
 
+    useEffect(() => createSnippet(), []);
+
     useEffect(() => {
-        window.ymab(clientId, "init", param, clientFeatures, (data) => {
-            setData({
+        window.ymab({
+            clientId,
+            clientFeatures,
+            config,
+            i,
+            callback: (data: ExpjsAnswer) => setData({
                 ...data,
                 ready: true,
-            });
+            }),
         });
-    }, [clientId, param, clientFeatures]);
+    }, [clientId, clientFeatures, config, i]);
 
     return data;
 }
