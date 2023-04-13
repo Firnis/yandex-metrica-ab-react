@@ -2,8 +2,11 @@
 
 React библиотека для работы с AB экспериментами Метрики
 
-### Как подключиться
+### Лэндинг сервиса
 https://varioqub.ru/
+
+### Документация
+https://yandex.com/support/varioqub/index.html
 
 ## Инструкция:
 ### Hook
