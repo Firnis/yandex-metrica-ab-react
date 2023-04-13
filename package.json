@@ -6,6 +6,7 @@
   "bugs": {
     "url": "https://github.com/Firnis/yandex-metrica-ab-react/issues"
   },
+  "keywords": ["react", "metrica", "metrika", "yandex", "ab", "varioqub"],
   "repository": {
     "type": "git",
     "url": "https://github.com/Firnis/yandex-metrica-ab-react"
