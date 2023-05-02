@@ -10,105 +10,21 @@ https://yandex.com/support/varioqub/index.html
 
 ## Инструкция:
 ### Hook
-```
-import { useExperiments } from 'yandex-metrica-ab-react';
-
-const ButtonRenderAfterFlags: React.FC = (props) => {
-    const { flags, ready } = useExperiments({
-        clientId,
-    });
-
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
-
-    if (!ready) {
-        return null;
-    }
-
-    return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
-};
-
-export const App: React.FC = () => (
-    <ButtonRenderAfterFlags />
-)
-```
+[example](src/example/index.tsx)
 
 ### Provider
-```
-import { MetricaExperimentsProvider, MetricaExperimentsContext } from 'yandex-metrica-ab-react';
-
-interface ConsumerButtonProps {
-    color?: string;
-}
-
-const ConsumerButton: React.FC<ConsumerButtonProps> = props => {
-    return <button style={{ backgroundColor: props.color }}>ConsumerButton</button>;
-}
-
-export const App: React.FC = () => (
-    <MetricaExperimentsProvider clientId={clientId}>
-        <MetricaExperimentsContext.Consumer>
-            {answer => <ConsumerButton color={answer.flags?.MY_BUTTON_COLOR?.[0]} />}
-        </MetricaExperimentsContext.Consumer>
-    </MetricaExperimentsProvider>
-);
-```
-
-
-### Provider + hook
-```
-import { MetricaExperimentsProvider, MetricaExperimentsContext } from 'yandex-metrica-ab-react';
-
-const OtherButton: React.FC = props => {
-    const { flags, ready } = useExperimentsContext();
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
-
-    if (!ready) return null;
-
-    return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
-}
-
-export const App: React.FC = () => (
-    <MetricaExperimentsProvider clientId={clientId}>
-        <OtherButton />
-    </MetricaExperimentsProvider>
-);
-```
+[example](src/example/provider.tsx)
 
 ### ClassComponent
-```
-import { MetricaExperimentsProvider, MetricaExperimentsContext } from 'yandex-metrica-ab-react';
-
-class ClassButton extends React.Component {
-    static contextType = MetricaExperimentsContext;
-    declare context: React.ContextType<typeof MetricaExperimentsContext>
-
-    render() {
-        const { flags, ready } = this.context;
-
-        if (!ready) return null;
-
-        const flagVal = flags.flag_exp?.[0];
-        return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...this.props }>{ String(flagVal || 'default').toUpperCase() }</button>;
-    }
-}
-
-export const App: React.FC = () => (
-    <MetricaExperimentsProvider clientId={clientId}>
-        <ClassButton />
-    </MetricaExperimentsProvider>
-);
-```
+[example](src/example/index.tsx)
 
 ### SSR
-```
 С помощью yandex-metrica-ab-node получаем флаги и передаём их в MetricaExperimentsContext приложения.
-
-
-// app.tsx
+```app.tsx
 export const App: React.FC = () => (
-    <MetricaExperimentsContext value={abMetricaAnswer.flags}>
+    <MetricaExperimentsContext.Provider value={{ ...YANDEX_METRICA_AB_NODE_DATA, ready: true }}>
         ...
-    </MetricaExperimentsContext>
+    </MetricaExperimentsContext.Provider>
 ```
 
 ### Клиентские фичи
@@ -118,4 +34,51 @@ export const App: React.FC = () => (
 Пример
 ```
     <MetricaExperimentsProvider clientId={clientId} clientFeatures={{ lang: 'ru', sex: 'male' }}>
+```
+
+### Указание доступных имён флагов для TS
+Для удобства использования флагов можно задать список доступных имён.
+```flags.ts
+// Описание флага может быть произвольной строкой. Оно нужно только для вас.
+export enum AvailableFlags {
+    Flag0 = 'My first flag',
+    HeaderRedButtons = 'Красные кнопки в хедере',
+}
+```
+```header.tsx
+...
+    const { flags } = useExperiments<typeof AvailableFlags>({ clientId });
+
+    const headerRebButtons = flags.HeaderRedButtons?.[0];
+...
+```
+или
+```header.tsx
+...
+    const { flags } = useExperimentsContext<typeof AvailableFlags>();
+
+    const headerRebButtons = flags.HeaderRedButtons?.[0];
+...
+```
+
+### Возвращаемый тип
+Функции useExperiments и useExperimentsContext возвращают объект
+```
+interface Answer {
+    // Набор флагов экспериментов, в которые попал пользователь
+    // Значение - массив, так как пользователь может попасть в несколько экспериментов с одним флагом
+    // Что делать в компоненте в таком случае - решать разработчику конечного сервиса
+    flags: Record<string, string[] | undefined>;
+
+    // Значение пользовательской куки, по которой система идентифицирует пользователя в varioqub (с ней ничего делать не нужно)
+    i?: string;
+
+    // Строка идентифицирующая набор экспериментов, в которые попал пользовать (с ней ничего делать не нужно)
+    experiments?: string;
+
+    // Флаг готовности:
+    // false - ещё не известно в какие эксперименты попал пользователь
+    // true - набор экспериментов и его флаги получены
+    ready: boolean;
+}
 ```
