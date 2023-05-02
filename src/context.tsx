@@ -1,8 +1,9 @@
-import React, { ReactNode, useContext } from 'react';
-import { Answer, NoAnswer } from './types';
+import React, { Context, ReactNode, useContext } from 'react';
+
+import { ReturnType, NamedReturnType } from './types';
 import { useExperiments, UseExperiments } from './useExperiments';
 
-export const MetricaExperimentsContext = React.createContext<Answer | NoAnswer>({
+export const MetricaExperimentsContext = React.createContext<ReturnType>({
     flags: {},
     ready: false,
 });
@@ -23,4 +24,4 @@ export const MetricaExperimentsProvider: React.FC<ContextExperiments> = (props) 
     );
 }
 
-export const useExperimentsContext = () => useContext(MetricaExperimentsContext);
+export const useExperimentsContext = <T extends Record<string, string>>() => useContext(MetricaExperimentsContext as Context<NamedReturnType<T>>);

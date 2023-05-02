@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Config, Answer, NoAnswer, ExpjsAnswer } from './types';
+import { Config, NamedReturnType, AnswerNamed, ExpjsAnswer } from './types';
 import { createSnippet } from './createSnippet';
 
 export interface UseExperiments {
@@ -9,9 +9,9 @@ export interface UseExperiments {
     clientFeatures?: Record<string, string>;
 }
 
-export const useExperiments = (params: UseExperiments) => {
+export const useExperiments = <T extends Record<string, string>>(params: UseExperiments) => {
     const { clientId, clientFeatures, config, param: i  } = params;
-    const [data, setData] = useState<Answer | NoAnswer>({ ready: false, flags: {} });
+    const [data, setData] = useState<NamedReturnType<T>>({ ready: false, flags: {} });
 
     useEffect(() => createSnippet(), []);
 
@@ -24,7 +24,7 @@ export const useExperiments = (params: UseExperiments) => {
             callback: (data: ExpjsAnswer) => setData({
                 ...data,
                 ready: true,
-            }),
+            } as AnswerNamed<T>),
         });
     }, [clientId, clientFeatures, config, i]);
 

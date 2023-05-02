@@ -22,3 +22,15 @@ export interface NoAnswer {
     experiments?: undefined;
     ready: false;
 }
+
+export interface AnswerNamed<T> extends Omit<Answer, 'flags'> {
+    flags: Partial<Record<keyof T, string[]>>;
+    ready: true;
+}
+
+export interface NoAnswerNamed<T> extends Omit<NoAnswer, 'flags'> {
+    flags: Partial<Record<keyof T, undefined>>;
+}
+
+export type ReturnType = Answer | NoAnswer;
+export type NamedReturnType<T> = AnswerNamed<T> | NoAnswerNamed<T>;
