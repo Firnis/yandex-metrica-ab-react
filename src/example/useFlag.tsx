@@ -1,55 +1,51 @@
-import React, { useMemo } from 'react';
-import ReactDOM from 'react-dom';
-import { useExperiments } from '../useExperiments';
+import React from 'react';
+import { useFlag } from '../useFlag';
 import { ProviderApp } from './provider';
 import { clientId } from './clientId';
 import { Flags } from './flags';
-import { UseFlagComponent } from './useFlag';
 
 // Кнопка будет перерисована после получения флагов. То есть мигнёт
 const Button: React.FC = (props) => {
-    const { flags } = useExperiments<typeof Flags>({
+    const { value: flag_exp } = useFlag<typeof Flags>('flag_exp', {
         clientId,
     });
 
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
+    const flagVal = flag_exp?.[0];
 
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
 
 // Кнопка будет нарисована только после получения флагов.
 const ButtonRenderAfterFlags: React.FC = (props) => {
-    const { flags, ready } = useExperiments<typeof Flags>({
+    const { value: flag_exp, ready } = useFlag<typeof Flags>('flag_exp', {
         clientId,
     });
-
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
 
     if (!ready) {
         return null;
     }
 
+    const flagVal = flag_exp?.[0];
+
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
 
 const ButtonClassName: React.FC = (props) => {
-    const { flags } = useExperiments<typeof Flags>({
+    const { value: flag_exp } = useFlag<typeof Flags>('flag_exp', {
         clientId,
     });
 
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
-    const className = useMemo(() => flagVal ? 'button__experiment' : 'button', [flagVal]);
+    const flagVal = flag_exp?.[0];
+    const className = flagVal ? 'button__experiment' : 'button';
 
     return <button className={ className } { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
 
-ReactDOM.render(
+export const UseFlagComponent = () => (
     <div>
         <Button />
         <ButtonRenderAfterFlags />
         <ButtonClassName />
         <ProviderApp />
-        <UseFlagComponent />
-    </div>,
-    document.getElementById('root'),
-)
+    </div>
+);
