@@ -19,15 +19,17 @@
     "url": "https://github.com/Firnis/yandex-metrica-ab-react"
   },
   "files": [
-    "./dist/index.js",
     "./dist/context.js",
-    "./dist/useExperiments.js",
     "./dist/createSnippet.js",
-    "./dist/index.d.ts",
+    "./dist/index.js",
+    "./dist/useExperiments.js",
+    "./dist/useFlag.js",
     "./dist/context.d.ts",
-    "./dist/useExperiments.d.ts",
-    "./dist/types.d.ts",
     "./dist/createSnippet.d.ts",
+    "./dist/index.d.ts",
+    "./dist/types.d.ts",
+    "./dist/useExperiments.d.ts",
+    "./dist/useFlag.d.ts",
     "./README.md"
   ],
   "main": "dist/index.js",
@@ -35,7 +37,7 @@
     "build": "tsc",
     "prepare": "npm run build"
   },
-  "author": "",
+  "author": "firnis",
   "license": "ISC",
   "devDependencies": {
     "@types/react": "^18.0.25",
