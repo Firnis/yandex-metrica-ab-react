@@ -1,1 +1,2 @@
-export const clientId = 'MY_METRICA_AB_CLIENT_ID';
+// XXXX нужно заменить на ваш id счётчика метрики
+export const clientId = 'metrika.XXXX';

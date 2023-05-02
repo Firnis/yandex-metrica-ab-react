@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import { useExperiments } from '../useExperiments';
 import { ProviderApp } from './provider';
 import { clientId } from './clientId';
+import { Flags } from './flags';
 
+// Кнопка будет перерисована после получения флагов. То есть мигнёт
 const Button: React.FC = (props) => {
-    const { flags } = useExperiments({
+    const { flags } = useExperiments<typeof Flags>({
         clientId,
     });
 
@@ -14,8 +16,9 @@ const Button: React.FC = (props) => {
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
 
+// Кнопка будет нарисована только после получения флагов.
 const ButtonRenderAfterFlags: React.FC = (props) => {
-    const { flags, ready } = useExperiments({
+    const { flags, ready } = useExperiments<typeof Flags>({
         clientId,
     });
 
@@ -29,7 +32,7 @@ const ButtonRenderAfterFlags: React.FC = (props) => {
 }
 
 const ButtonClassName: React.FC = (props) => {
-    const { flags } = useExperiments({
+    const { flags } = useExperiments<typeof Flags>({
         clientId,
     });
 
