@@ -65,8 +65,25 @@ const ConsumerButton: React.FC<ConsumerButtonProps> = props => {
     return <button style={{ backgroundColor: props.color }}>ConsumerButton</button>;
 }
 
+// Приложение перерисуется, когда получит флаги.
+// Проблема мигания компонентов решается в самих компонентах проверкой ready === true
 export const ProviderApp: React.FC = () => (
     <MetricaExperimentsProvider clientId={clientId}>
+        <Button />
+        <OtherButton />
+        <ClassButton />
+        <ButtonUseFlag />
+        <ButtonUseFlagNoFlicker />
+        <MetricaExperimentsContext.Consumer>
+            {(answer: NamedReturnType<typeof Flags>) => <ConsumerButton color={answer.flags.MY_BUTTON_COLOR?.[0]} />}
+        </MetricaExperimentsContext.Consumer>
+    </MetricaExperimentsProvider>
+);
+
+// Приложение отрисуется только когда получит флаги.
+// Проверять ready в компонентах не нужно
+export const ProviderNoFlickerApp: React.FC = () => (
+    <MetricaExperimentsProvider clientId={clientId} enableAntiflicker antiflickerTimeout={1000}>
         <Button />
         <OtherButton />
         <ClassButton />
