@@ -24,7 +24,12 @@ export const MetricaExperimentsProvider: React.FC<ContextExperiments> = (props) 
     const data = useExperiments(params);
 
     useEffect(() => {
-        if (!enableAntiflicker || data.ready) {
+        if (!enableAntiflicker) {
+            return;
+        }
+
+        if (data.ready) {
+            setHidden(false);
             return;
         }
 
@@ -38,7 +43,7 @@ export const MetricaExperimentsProvider: React.FC<ContextExperiments> = (props) 
     }
 
     return (
-        <MetricaExperimentsContext.Provider value={{ ...data }}>
+        <MetricaExperimentsContext.Provider value={ data }>
             { children }
         </MetricaExperimentsContext.Provider>
     );
