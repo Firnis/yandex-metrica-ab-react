@@ -9,14 +9,16 @@ https://varioqub.ru/
 https://yandex.com/support/varioqub/index.html
 
 ## Инструкция:
-### Hook
-[example](src/example/index.tsx)
+### [Hook](src/example/index.tsx)
 
-### Provider
-[example](src/example/provider.tsx)
+### [Provider](src/example/provider.tsx)
+#### Antiflicker
+Для провайдера можно настроить режим работы без мигания.
+`enableAntiflicker` - включает режим. По умолчанию = false
+`antiflickerTimeout` - задает задержку. По умолчанию 4000 (подсмотрено в optimize). Обычно задержка на получения флагов 50-200мс, но при медленном интернете доходит до секунд.
+В этом режиме дети MetricaExperimentsProvider не будут отрисованы до тех пор, пока приложение не поличит флаги экспериментов, поэтому в компонентах не нужно проверять ready === true.
 
-### ClassComponent
-[example](src/example/index.tsx)
+### [ClassComponent](src/example/index.tsx)
 
 ### SSR
 С помощью yandex-metrica-ab-node получаем флаги и передаём их в MetricaExperimentsContext приложения.
@@ -73,7 +75,7 @@ interface Answer {
     // Значение пользовательской куки, по которой система идентифицирует пользователя в varioqub (с ней ничего делать не нужно)
     i?: string;
 
-    // Строка идентифицирующая набор экспериментов, в которые попал пользовать (с ней ничего делать не нужно)
+    // Строка, идентифицирующая набор экспериментов, в которые попал пользователь (с ней ничего делать не нужно)
     experiments?: string;
 
     // Флаг готовности:
