@@ -25,3 +25,12 @@ export const MetricaExperimentsProvider: React.FC<ContextExperiments> = (props) 
 }
 
 export const useExperimentsContext = <T extends Record<string, string>>() => useContext(MetricaExperimentsContext as Context<NamedReturnType<T>>);
+
+export const useFlagContext = <T extends Record<string, string>>(name: keyof T) => {
+    const answer = useExperimentsContext<T>();
+
+    return {
+        value: answer.flags[name],
+        ready: answer.ready,
+    };
+};
