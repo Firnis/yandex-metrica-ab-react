@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useExperimentsContext, MetricaExperimentsProvider, MetricaExperimentsContext } from '../context';
+import { useExperimentsContext, MetricaExperimentsProvider, MetricaExperimentsContext, useFlagContext } from '../context';
 import { clientId } from './clientId';
 import { Flags } from './flags';
 import { NamedReturnType } from '../types';
@@ -18,6 +18,27 @@ const OtherButton: React.FC = props => {
     const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
 
     if (!ready) return null;
+
+    return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
+}
+
+// Кнопка будет перерисована после получения флагов. То есть мигнёт
+const ButtonUseFlag: React.FC = props => {
+    const { value: flagVals } = useFlagContext<typeof Flags>('flag_exp');
+    const flagVal = flagVals?.[0];
+
+    return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
+}
+
+// Кнопка будет нарисована только после получения флагов.
+const ButtonUseFlagNoFlicker: React.FC = props => {
+    const { ready, value: flagVals } = useFlagContext<typeof Flags>('flag_exp');
+
+    if (!ready) {
+        return null;
+    }
+
+    const flagVal = flagVals?.[0];
 
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
@@ -49,6 +70,8 @@ export const ProviderApp: React.FC = () => (
         <Button />
         <OtherButton />
         <ClassButton />
+        <ButtonUseFlag />
+        <ButtonUseFlagNoFlicker />
         <MetricaExperimentsContext.Consumer>
             {(answer: NamedReturnType<typeof Flags>) => <ConsumerButton color={answer.flags.MY_BUTTON_COLOR?.[0]} />}
         </MetricaExperimentsContext.Consumer>
