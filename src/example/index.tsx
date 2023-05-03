@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { useExperiments } from '../useExperiments';
-import { ProviderApp } from './provider';
+import { ProviderApp, ProviderNoFlickerApp } from './provider';
 import { clientId } from './clientId';
 import { Flags } from './flags';
 import { UseFlagComponent } from './useFlag';
@@ -49,6 +49,7 @@ ReactDOM.render(
         <ButtonRenderAfterFlags />
         <ButtonClassName />
         <ProviderApp />
+        <ProviderNoFlickerApp />
         <UseFlagComponent />
     </div>,
     document.getElementById('root'),

@@ -3,14 +3,14 @@ export const createSnippet = () => {
         return;
     }
 
-    (function (e: Window, x: Document, pe: 'script', r: string, i: 'ymab', me?: HTMLScriptElement, n?: HTMLScriptElement, t?: Function) {
-        e[i] = e[i] || function () { (e[i].a = e[i].a || []).push(arguments) };
-        me = x.createElement(pe); me.async = true; me.src = r; n = x.getElementsByTagName(pe)[0]; n?.parentNode?.insertBefore(me, n),
-        me.addEventListener('error', function () {
-            e[i] = function () {
-                t = arguments[arguments.length - 1];
-                if (typeof t === 'function') {
-                    t({ flags: {} });
+    (function (v: Window, a: Document, r: 'script', i: string, o: 'ymab', q?: HTMLScriptElement, u?: HTMLScriptElement, b?: Function) {
+        v[o] = v[o] || function () { (v[o].a = v[o].a || []).push(arguments) };
+        q = a.createElement(r); q.async = true; q.src = i; u = a.getElementsByTagName(r)[0]; u?.parentNode?.insertBefore(q, u),
+        q.addEventListener('error', function () {
+            v[o] = function () {
+                b = arguments[arguments.length - 1];
+                if (typeof b === 'function') {
+                    b({ flags: {} });
                 }
             };
         });
