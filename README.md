@@ -14,8 +14,11 @@ https://yandex.com/support/varioqub/index.html
 ### [Provider](src/example/provider.tsx)
 #### Antiflicker
 Для провайдера можно настроить режим работы без мигания.
+
 `enableAntiflicker` - включает режим. По умолчанию = false
+
 `antiflickerTimeout` - задает задержку. По умолчанию 4000 (подсмотрено в optimize). Обычно задержка на получения флагов 50-200мс, но при медленном интернете доходит до секунд.
+
 В этом режиме дети MetricaExperimentsProvider не будут отрисованы до тех пор, пока приложение не поличит флаги экспериментов, поэтому в компонентах не нужно проверять ready === true.
 
 ### [ClassComponent](src/example/index.tsx)
