@@ -12,6 +12,7 @@ export interface UseExperiments {
 export const useExperiments = <T extends Record<string, string>>(params: UseExperiments) => {
     const { clientId, clientFeatures, config, param: i  } = params;
     const [data, setData] = useState<NamedReturnType<T>>({ ready: false, flags: {} });
+    const href = window.location.href;
 
     useEffect(() => createSnippet(), []);
 
@@ -26,7 +27,7 @@ export const useExperiments = <T extends Record<string, string>>(params: UseExpe
                 ready: true,
             } as AnswerNamed<T>),
         });
-    }, [clientId, clientFeatures, config, i]);
+    }, [clientId, clientFeatures, config, i, href]);
 
     return data;
 }
