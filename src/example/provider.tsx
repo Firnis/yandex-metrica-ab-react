@@ -24,21 +24,18 @@ const OtherButton: React.FC = props => {
 
 // Кнопка будет перерисована после получения флагов. То есть мигнёт
 const ButtonUseFlag: React.FC = props => {
-    const { value: flagVals } = useFlagContext<typeof Flags>('flag_exp');
-    const flagVal = flagVals?.[0];
+    const { value: [flagVal] } = useFlagContext<typeof Flags>('flag_exp');
 
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
 
 // Кнопка будет нарисована только после получения флагов.
 const ButtonUseFlagNoFlicker: React.FC = props => {
-    const { ready, value: flagVals } = useFlagContext<typeof Flags>('flag_exp');
+    const { ready, value: flagVal } = useFlagContext<typeof Flags>('flag_exp', true);
 
     if (!ready) {
         return null;
     }
-
-    const flagVal = flagVals?.[0];
 
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
