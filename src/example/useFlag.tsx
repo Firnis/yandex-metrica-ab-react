@@ -17,7 +17,7 @@ const Button: React.FC = (props) => {
 
 // Кнопка будет нарисована только после получения флагов.
 const ButtonRenderAfterFlags: React.FC = (props) => {
-    const { value: flag_exp, ready } = useFlag<typeof Flags>('flag_exp', {
+    const { value: [flagVal], ready } = useFlag<typeof Flags>('flag_exp', {
         clientId,
     });
 
@@ -25,17 +25,14 @@ const ButtonRenderAfterFlags: React.FC = (props) => {
         return null;
     }
 
-    const flagVal = flag_exp?.[0];
-
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
 
 const ButtonClassName: React.FC = (props) => {
-    const { value: flag_exp } = useFlag<typeof Flags>('flag_exp', {
+    const { value: flagVal } = useFlag<typeof Flags>('flag_exp', {
         clientId,
-    });
+    }, true);
 
-    const flagVal = flag_exp?.[0];
     const className = flagVal ? 'button__experiment' : 'button';
 
     return <button className={ className } { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
