@@ -2,6 +2,7 @@ export interface ExpjsAnswer {
     flags: Record<string, string[] | undefined>;
     i?: string;
     experiments?: string;
+    testids?: number[];
 }
 
 export interface Config {
@@ -28,6 +29,7 @@ export interface NoAnswer {
     flags: Record<string, undefined>;
     i?: undefined;
     experiments?: undefined;
+    testids?: undefined;
     ready: false;
 }
 
