@@ -10,17 +10,22 @@ export interface UseExperiments {
 }
 
 export const useExperiments = <T extends Record<string, string>>(params: UseExperiments) => {
-    const { clientId, clientFeatures, config, param: i  } = params;
+    const { clientId, clientFeatures, config = {}, param: i  } = params;
     const [data, setData] = useState<NamedReturnType<T>>({ ready: false, flags: {} });
     const href = window.location.href;
 
     useEffect(() => createSnippet(), []);
 
     useEffect(() => {
+        const enableVisual = typeof config.enableVisual === 'undefined' || config.enableVisual;
+
         window.ymab({
             clientId,
             clientFeatures,
-            config,
+            config: {
+                ...config,
+                enableWatch: typeof config.enableWatch === 'undefined' ? enableVisual : config.enableWatch,
+            },
             i,
             callback: (data: ExpjsAnswer) => setData({
                 ...data,

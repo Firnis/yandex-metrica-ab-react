@@ -10,6 +10,14 @@ export interface Config {
     enableHTML: boolean;   // default true. Ignored if enableVisual = false
     enableJS: boolean;     // default false. Ignored if enableVisual = false
     enableRedir: boolean;  // default true
+    // Runs the MutationObserver and reapplies the changes when the element changes.
+    // Applied only for experiments with visual-editor
+    enableWatch: boolean;     // default true, if enableVisual !== false
+    // Save experiment marker before redirect
+    storeRedirParam: boolean | 'localstorage' | 'cookie' | 'get';  // default true
+    // How long wait for Yandex metrica counter to initialize before make a redirect.
+    // Applied only to experiments with redirect
+    metrikaTimeout: number;    // default 100.
 }
 
 export interface Answer extends ExpjsAnswer {
