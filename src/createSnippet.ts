@@ -7,11 +7,15 @@ export const createSnippet = () => {
         v[o] = v[o] || function () { (v[o].a = v[o].a || []).push(arguments) };
         q = a.createElement(r); q.async = true; q.src = i; u = a.getElementsByTagName(r)[0]; u?.parentNode?.insertBefore(q, u),
         q.addEventListener('error', function () {
-            v[o] = function () {
-                b = arguments[arguments.length - 1];
+            function fn(args: IArguments) {
+                b = args[args.length - 1];
                 if (typeof b === 'function') {
                     b({ flags: {} });
                 }
+            }
+            v[o].a?.forEach(fn);
+            v[o] = function () {
+                fn(arguments);
             };
         });
     }(window, document, 'script', 'https://abt.s3.yandex.net/expjs/latest/exp.js', 'ymab'));
