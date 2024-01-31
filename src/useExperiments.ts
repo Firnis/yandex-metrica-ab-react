@@ -16,6 +16,20 @@ export const useExperiments = <T extends Record<string, string>>(params: UseExpe
 
     useEffect(() => createSnippet(), []);
 
+    let configKey = '';
+    try {
+        configKey = JSON.stringify(config);
+    } catch (e) {
+        console.error(e);
+    }
+
+    let featuresKey = '';
+    try {
+        featuresKey = JSON.stringify(clientFeatures || {});
+    } catch (e) {
+        console.error(e);
+    }
+
     useEffect(() => {
         const enableVisual = typeof config.enableVisual === 'undefined' || config.enableVisual;
 
@@ -32,7 +46,7 @@ export const useExperiments = <T extends Record<string, string>>(params: UseExpe
                 ready: true,
             } as AnswerNamed<T>),
         });
-    }, [clientId, clientFeatures, config, i, href]);
+    }, [clientId, featuresKey, configKey, i, href]);
 
     return data;
 }
