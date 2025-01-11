@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { useExperiments } from '../useExperiments';
 import { ProviderApp, ProviderNoFlickerApp } from './provider';
@@ -12,7 +12,7 @@ const Button: React.FC = (props) => {
         clientId,
     });
 
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
+    const flagVal = flags.flag_exp?.[0];
 
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
@@ -23,7 +23,7 @@ const ButtonRenderAfterFlags: React.FC = (props) => {
         clientId,
     });
 
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
+    const flagVal = flags.flag_exp?.[0];
 
     if (!ready) {
         return null;
@@ -37,8 +37,8 @@ const ButtonClassName: React.FC = (props) => {
         clientId,
     });
 
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
-    const className = useMemo(() => flagVal ? 'button__experiment' : 'button', [flagVal]);
+    const flagVal = flags.flag_exp?.[0];
+    const className = flagVal ? 'button__experiment' : 'button';
 
     return <button className={ className } { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
