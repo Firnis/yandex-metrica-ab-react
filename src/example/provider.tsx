@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useExperimentsContext, MetricaExperimentsProvider, MetricaExperimentsContext, useFlagContext } from '../context';
 import { clientId } from './clientId';
 import { Flags } from './flags';
@@ -7,7 +7,7 @@ import { NamedReturnType } from '../types';
 // Кнопка будет перерисована после получения флагов. То есть мигнёт
 const Button: React.FC = props => {
     const { flags } = useExperimentsContext<typeof Flags>();
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
+    const flagVal = flags.flag_exp?.[0];
 
     return <button style={{ backgroundColor: flagVal || '#ccc' }} { ...props }>{ String(flagVal || 'default').toUpperCase() }</button>;
 }
@@ -15,7 +15,7 @@ const Button: React.FC = props => {
 // Кнопка будет нарисована только после получения флагов.
 const OtherButton: React.FC = props => {
     const { flags, ready } = useExperimentsContext<typeof Flags>();
-    const flagVal = useMemo(() => flags.flag_exp?.[0], [flags]);
+    const flagVal = flags.flag_exp?.[0];
 
     if (!ready) return null;
 
