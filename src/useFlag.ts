@@ -1,7 +1,20 @@
 import { UseExperiments, useExperiments } from './useExperiments';
+import type { Answer } from './types';
 
-export function useFlag<T extends Record<string, string>>(name: keyof T, params: UseExperiments, takeFirst?: false): { ready: boolean, value: Array<string> };
-export function useFlag<T extends Record<string, string>>(name: keyof T, params: UseExperiments, takeFirst: true): { ready: boolean, value: string };
+type Ready = Pick<Answer, 'ready'>;
+
+export function useFlag<T extends Record<string, string>>(name: keyof T, params: UseExperiments, takeFirst?: false): Ready & {
+    /**
+     * Flag values
+     */
+    value: Array<string>
+};
+export function useFlag<T extends Record<string, string>>(name: keyof T, params: UseExperiments, takeFirst: true): Ready & {
+    /**
+     * Flag value
+     */
+    value: string
+};
 
 export function useFlag<T extends Record<string, string>>(name: keyof T, params: UseExperiments, takeFirst = false) {
     const { ready, flags } = useExperiments<T>(params);
