@@ -7,7 +7,7 @@ export interface UseExperiments {
      * Id of Varioqub client (metrika.XXXX)
      * Read documentation (https://yandex.com/support/varioqub/en/objects/ymab)
      */
-    clientId: string;
+    clientId?: string;
     /**
      * Site user's ID.
      * "icookie" in the documentation (https://yandex.com/support/varioqub/en/objects/ymab)
@@ -39,8 +39,11 @@ const useJsonStringify = (data: object = {}) => {
 };
 
 export const useExperiments = <T extends Record<string, string>>(params: UseExperiments) => {
-    const { clientId, clientFeatures, config = {}, param: i  } = params;
-    const [data, setData] = useState<NamedReturnType<T>>({ ready: false, flags: {} });
+    const { clientId, clientFeatures, config = {}, param: i } = params;
+    const [data, setData] = useState<NamedReturnType<T>>({
+        ready: false,
+        flags: {},
+    });
     const configKey = useJsonStringify(config);
     const featuresKey = useJsonStringify(clientFeatures);
     const href = window.location.href;
@@ -50,20 +53,26 @@ export const useExperiments = <T extends Record<string, string>>(params: UseExpe
     useEffect(() => {
         const enableVisual = typeof config.enableVisual === 'undefined' || config.enableVisual;
 
-        window.ymab({
-            clientId,
-            clientFeatures,
-            config: {
-                ...config,
-                enableWatch: typeof config.enableWatch === 'undefined' ? enableVisual : config.enableWatch,
-            },
-            i,
-            callback: (data: ExpjsAnswer) => setData({
-                ...data,
-                ready: true,
-            } as AnswerNamed<T>),
-        });
+        if (clientId) {
+            window.ymab({
+                clientId,
+                clientFeatures,
+                config: {
+                    ...config,
+                    enableWatch:
+                        typeof config.enableWatch === 'undefined'
+                            ? enableVisual
+                            : config.enableWatch,
+                },
+                i,
+                callback: (data: ExpjsAnswer) =>
+                    setData({
+                        ...data,
+                        ready: true,
+                    } as AnswerNamed<T>),
+            });
+        }
     }, [clientId, featuresKey, configKey, i, href]);
 
     return data;
-}
+};
